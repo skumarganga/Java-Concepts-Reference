@@ -22,7 +22,7 @@ interface Map {
 > The relation between outer class and inner class is NOT 'IS-A' relation. It is a 'HAS-A' relationship (Composition/Aggregation).
 
 TYPES OF INNER CLASSES (Based on position of declaration and behaviour they are devided):
-1) Normal / Rgular inner classes.
+1) Normal / Regular inner classes.
 2) Method local inner classes.
 3) Anonimous inner classes.
 4) Static nested classes.
