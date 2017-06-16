@@ -2,7 +2,7 @@ package com.saga.innerclasses;
 
 /**
  * 
- * @author Sathish
+ * @author Sathish K Ganga
  * 
  *         Some times we can declare a class inside a method. Such type of inner
  *         classes are called method local inner classes.
