@@ -32,6 +32,7 @@ public class AnonymousInnerClassDemo3 {
 		t2.start();
 		
 		// Same above t2 - different way
+		// Example for anonymous inner class that defined inside arguments
 		new Thread(new Runnable() {
 			public void run() {
 				for (int i = 0; i < 10; i++) {
