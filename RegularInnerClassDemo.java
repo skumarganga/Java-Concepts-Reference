@@ -2,7 +2,7 @@ package com.saga.innerclasses;
 
 /**
  * 
- * @author Sathish
+ * @author Sathish K Ganga
  * 
  *         If we are declaring any named class directly inside a class without
  *         static modifier, such type of class is called normal/ regular inner
