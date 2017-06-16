@@ -32,3 +32,18 @@ https://github.com/skumarganga/Java-Concepts-Reference/blob/master/RegularInnerC
 
 2) Learn about Java concept: Method local inner classes
 https://github.com/skumarganga/Java-Concepts-Reference/blob/master/MethodLocalInnerClassDemo.java
+
+3) Anonymous inner classes:
+> Some times we can declare inner classes without name. Such type of inner classes are called anonymous inner classes.
+> The main purpose of anonymous inner classes is just for instant use [one time usage].
+> Based on declaration and behaviour anonymous inner classes are devided into three types. They are:
+
+i) Anonymous inner class that extends a class.
+Code references to learn:
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/AnonymousInnerClassDemo1.java
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/AnonymousInnerClassDemo2.java
+
+ii) Anonymous inner class that implements an interface.
+iii) Anonymous inner class that defined inside arguments.
+Code reference to learn ii & iii:
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/AnonymousInnerClassDemo3.java
