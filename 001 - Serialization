@@ -1,0 +1,60 @@
+1) INTRODUCTION:
+
+SERIALIZATION: The process of saving state of object to a file, strictly speaking the process of converting an object from java supported
+form to file supported OR network supported form is called serialization.
+
+DESERIALIZATION: The process of converting file supported OR network supported form to java supported form is called deserialization.
+
+Classes used for serialization: FileOutputStream, ObjectOutputStream
+Classes used for deserialization: FileInputStream, ObjectInputStream
+
+Serializing class should implement "Serializable" interface. Serializable is a marker interface. If serializing class doesn't implement 
+Serializable interface then there is no problem at compile time (It compiles fine), but at run time it throws exception:
+java.io.NotSerializableException.
+
+*Marker interface: If an interface doesn't contain any methods and by implementing that interface, if the object gets some ability
+such type of interface is called marker interface or ability interface or tag interface. By implementing Serializable interface, objects
+can be saved to a file or can be transferred across a network.
+NOTE: For marker interface, internally JVM is responsible to provide required ability to reduce complexity of programming and to make
+java language as simple. To create our own marker interface, JVM has to be customized as per the requirement.
+
+TRANSIENT keyword: It is a modifier which is applicable ONLY FOR VARIABLES. At the time of serialization if we don't want any particuler 
+variable due to security reasons/constraints, such type of variable to be declared transient.
+> At the time of serialization, JVM ignores the original value of transient variable and saves default value of the variable.
+> Static variable will not participate in serialization as it is not object level variable. Hence there is no use of declaring
+static variable as transient.
+> Similarly, combining final keyword with transient is tricky. JVM won't save default value of variable as expected with transient and
+it depends on the declaration of the variable. In general final variables are assigned with value during compile time only. Hence the 
+value can not be changed. Hence it doesn't serve the purpose of transient.
+
+NOTE: Serialization and deserialization of multiple objects to a single file SHOULD BE IN SAME ORDER. If we don't know the order of objects
+in serialization, typecast based on instance type.
+Example: Object o = ois.readObject();
+         if(o instanceOf Dog) { ... }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+2) OBJECT GRAPH IN SERIALIZATION:
+When ever we are serializing an object, the set of all objects which are reachable from that object will be serialized automatically.
+This group objects that will be serialized is object graph in serialization.
+NOTE: All the classes in graph should implement Serializable.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+3) CUSTOMIZED SERIALIZATION:
+In default serialization, there may be a chance of loss of information because of transient variables. To recover this loss of information
+we should go for customized serialization concept.
+Example: Suppose an object holds a password of a user, then due to security reasons if the password variable is made transient, then the
+variable value will be saved/transferred as its default value. In order to recover the password, we can use encryption at sender side and
+decryption at receiver side. Hence some extra work has to be done at sender and recever side (means during serialization and 
+deserialization).
+Define the extra work under the following methods:
+During serialization: private void writeObject(ObjectOutputSteam oos) throes Exception
+During deserialization: private void readObject(ObjectInputStream ois) throws Exception
+
+NOTE: If any methods are executed automatically by JVM, they are called 'callback' methods. 
+defaultWriteObject(), defaultReadObject() are meant for default serialization.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+4) 
