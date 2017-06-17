@@ -24,7 +24,7 @@ interface Map {
 TYPES OF INNER CLASSES (Based on position of declaration and behaviour they are devided):
 1) Normal / Regular inner classes.
 2) Method local inner classes.
-3) Anonimous inner classes.
+3) Anonymous inner classes.
 4) Static nested classes.
 
 1) Learn about Java concept: Normal / Regular inner classes
@@ -58,5 +58,5 @@ Anonymous inner class can extend a class or can implement an interface but not b
 > NOTE: If a requirement is standard and required several times then we should go for normal top level class. If the requirement is
 temperory and required only once (instant use) then we should go for anonymous inner class.
 
-2) Learn about Java concept: Static nested classes
+4) Learn about Java concept: Static nested classes
 https://github.com/skumarganga/Java-Concepts-Reference/blob/master/StaticNestedClassDemo.java
