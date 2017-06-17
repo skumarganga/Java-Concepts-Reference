@@ -1,3 +1,5 @@
+#Author: Sathish K Ganga
+
 1) INTRODUCTION:
 
 SERIALIZATION: The process of saving state of object to a file, strictly speaking the process of converting an object from java supported
@@ -12,7 +14,7 @@ Serializing class should implement "Serializable" interface. Serializable is a m
 Serializable interface then there is no problem at compile time (It compiles fine), but at run time it throws exception:
 java.io.NotSerializableException.
 
-*Marker interface: If an interface doesn't contain any methods and by implementing that interface, if the object gets some ability
+*Marker interface: If an interface doesn't contain any methods and by implementing that interface, if the object gets some ability,
 such type of interface is called marker interface or ability interface or tag interface. By implementing Serializable interface, objects
 can be saved to a file or can be transferred across a network.
 NOTE: For marker interface, internally JVM is responsible to provide required ability to reduce complexity of programming and to make
@@ -36,7 +38,7 @@ Example: Object o = ois.readObject();
 
 2) OBJECT GRAPH IN SERIALIZATION:
 When ever we are serializing an object, the set of all objects which are reachable from that object will be serialized automatically.
-This group objects that will be serialized is object graph in serialization.
+This group of objects that will be serialized is object graph in serialization.
 NOTE: All the classes in graph should implement Serializable.
 
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -49,7 +51,7 @@ variable value will be saved/transferred as its default value. In order to recov
 decryption at receiver side. Hence some extra work has to be done at sender and recever side (means during serialization and 
 deserialization).
 Define the extra work under the following methods:
-During serialization: private void writeObject(ObjectOutputSteam oos) throes Exception
+During serialization: private void writeObject(ObjectOutputSteam oos) throws Exception
 During deserialization: private void readObject(ObjectInputStream ois) throws Exception
 
 NOTE: If any methods are executed automatically by JVM, they are called 'callback' methods. 
@@ -57,4 +59,65 @@ defaultWriteObject(), defaultReadObject() are meant for default serialization.
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
-4) 
+4) SERIALIZATION WITH RESPECT TO INHERITANCE
+Case#1: Parent implements Serializable but not child: If the parent is serializable then automatically all child classes will implement
+serializable by default eventhough child classes don't implement serializable explicitly.
+Example: GenericServlet implements Serializable, hence all servlets implemets Serializable.
+
+Case#2: Parent doesn't implement Serializable but child implements: 
+> To serialize a child object, parent class need not be serializable. At the time of serialization, JVM checks is there exists any variable
+coming from non serializable object, if any instance variable inheriting from non-serializable parent then JVM ignores original value and 
+saves default value to the file.
+> At the time of deserialization, JVM checks is any parent class is non-serializable or not. If parent class non-serializable then JVM will
+execute instance control flow and share its instance variable values to current object.
+> Instance control flow:
+         > Identification of instance variables/members.
+         > Execution of instance variable assignments and instance blocks.
+         > Execution of constructor.
+As part of instance flow execution JVM will always call default constructor or no-arg constructor of non-serializable parent. Hence every
+non-serializable parent should compulsory contain no-arg constructor which may be a programmer provided or compiler generated default
+constructor, otherwise we will get runtime exception saying 'InvalidClassException'.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+5) EXTERNALIZATION
+> In serialization everything will be taken care by JVM, programmer will not have any control.
+> In serialization it is always possible to save total object to the file and it is not possible to save part of the object.
+To overcome above problems, we should go for externalization.
+
+> In externalization, everything is controlled by programmer, JVM won't have control. Note that relatively performance will be increased.
+> To provide externalizability to any class, it compulsory should implement 'Externalizable' interface.
+> As programmer is responsible to provide ability in externalization, the interface has two methods.
+         1) writeExternal()
+         2) readExternal()
+> Externalizable is the child interface of Serializable only. Both were introdued in Java 1.1 version.
+** In externalization, at the time of deserialization file doesn't contain total object. Thats why JVM will create a seperate new object and
+on that object JVM will call readExternal() method. To create this new object, JVM will always call public no-arg constructor. So compulsory
+externalizable object should have no-arg constructor which is either programmer provided or compiler generated, otherwise run time
+exception 'invalidClassException' will appear.
+** Transient keyword is not required in externalization. It won't play any role.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+6) SerialversionUID
+-> Sender and receiver need not be same.
+-> Both sender and receiver need not be from same location.
+-> Sender and receiver need not to use same machine (Sender may use Linux while receiver using Windows).
+In serialization and deserialization '.class' file should be available on the sender machine and receiver machine at the beginning only.
+Just state of the object will be travelling from sender to receiver. At the time of serialization for every object, sender side JVM will
+save one generated unique identifier based on '.class' file. This is called SerialversionUID.
+
+> There are several problems if we depend on default SerialversionUID generated by JVM.
+Example: Suppose sender is using UNIX based 1.6 version JVM and generated UID - 101
+         If receiver is using WINDOWS based 1.8 version JVM then there is no guarantee in generating same UID - 101
+         In such case if any mismatch happens, run time exception 'InvalidClassExceptio' appears.
+         
+Hence the problems are,
+> Both sender and receiver should use same JVM with respect to vendor and version.
+> Both sender and receiver should use same .class file version.
+> Performance problem: Internally JVM may use complex algorithm to generate UID.
+
+** To overcome these problems, don't give chance to JVM to generate UID. Configure own UID.
+Example: private static final long serialversionUID = 1L;
+
+--------------------------------------------------------------------------------------------------------------------------------------
