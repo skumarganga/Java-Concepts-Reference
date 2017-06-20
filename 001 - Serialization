@@ -48,7 +48,7 @@ In default serialization, there may be a chance of loss of information because o
 we should go for customized serialization concept.
 Example: Suppose an object holds a password of a user, then due to security reasons if the password variable is made transient, then the
 variable value will be saved/transferred as its default value. In order to recover the password, we can use encryption at sender side and
-decryption at receiver side. Hence some extra work has to be done at sender and recever side (means during serialization and 
+decryption at receiver side. Hence some extra work has to be done at sender and receiver side (means during serialization and 
 deserialization).
 Define the extra work under the following methods:
 During serialization: private void writeObject(ObjectOutputSteam oos) throws Exception
@@ -121,3 +121,7 @@ Hence the problems are,
 Example: private static final long serialversionUID = 1L;
 
 --------------------------------------------------------------------------------------------------------------------------------------
+Refer the code for better understanding:
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/SerializationDemo1.java
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/SerializationDemo2.java
+https://github.com/skumarganga/Java-Concepts-Reference/blob/master/SerializationDemo3.java
